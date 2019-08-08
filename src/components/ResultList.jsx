@@ -3,24 +3,16 @@ import React, { Component } from "react";
 class ResultList extends Component {
   render() {
     return (
-      <div className="">
-        <ul className="">
-          {this.props.badges.map(badge => {
+      <div>
+        <ul>
+          {this.props.products.map(product => {
             return (
-              <li key={badge.id} className="BadgesListItem">
-                <img
-                  className="BadgesListItem__avatar"
-                  src={badge.avatar}
-                  alt="Avatar"
-                />
+              <li key={product.id}>
+                <img src={product.thumbnail} alt="thumbnail" />
                 <div>
-                  <p className="BadgesListItem__name">
-                    {badge.firstName} {badge.lastName}
-                  </p>
-                  <p className="BadgesListItem__twitter">
-                    <i className="fab fa-twitter" /> @{badge.twitter}
-                  </p>
-                  <p className="BadgesListItem__jobTitle">{badge.jobTitle}</p>
+                  <p>{product.title}</p>
+                  <p>{product.price}</p>
+                  <p>{product.seller.id}</p>
                 </div>
               </li>
             );
