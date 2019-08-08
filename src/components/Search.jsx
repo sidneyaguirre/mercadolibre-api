@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import ResultList from "../components/ResultList"
 
+const initialState = {
+  item: "",
+  results: []
+};
+
 class Search extends Component {
   state = {
     item: "",
@@ -18,6 +23,7 @@ class Search extends Component {
     console.log("Button was clicked");
     this.getProducts(this.state.item);
     console.log(this.state.results);
+    this.setState(initialState);
   };
 
   handleSubmit = e => {
