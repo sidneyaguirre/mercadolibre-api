@@ -8,6 +8,11 @@ const initialState = {
   results: []
 };
 
+const initialState = {
+  item: "",
+  results: []
+};
+
 class Search extends Component {
   state = {
     item: "",
