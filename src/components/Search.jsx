@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import ResultList from "../components/ResultList"
+import ResultList from "../components/ResultList";
+
+import "./styles/Search.css";
+
+const initialState = {
+  item: "",
+  results: []
+};
 
 class Search extends Component {
   state = {
@@ -18,6 +25,7 @@ class Search extends Component {
     console.log("Button was clicked");
     this.getProducts(this.state.item);
     console.log(this.state.results);
+    this.setState(initialState);
   };
 
   handleSubmit = e => {
@@ -26,43 +34,47 @@ class Search extends Component {
     //console.log(this.state.item);
   };
 
-  getProducts = async (param) => {
+  getProducts = async param => {
     console.log(param);
-    const res = await fetch(`https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-080721-00241995db910be51e687be1a3ed8254-349672714`);
+    const res = await fetch(
+      `https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-080921-fc31c7b26de0adfb1c1b698788499187-349672714`
+    );
     const data = await res.json();
-    this.setState({results:[].concat(this.state.results, data.results)})
-  }  
-  
-  getSellers = async (param) => {
+    this.setState({ results: [].concat(this.state.results, data.results) });
+  };
+
+  getSellers = async param => {
     console.log(param);
     const res = await fetch(`https://api.mercadolibre.com/users/${param}`);
     const data = await res.json();
-    this.setState({results:[].concat(this.state.results, data.results)})
-  }
+    this.setState({ results: [].concat(this.state.results, data.results) });
+  };
 
   render() {
     return (
       <div>
+        <div className="search__form">
+          <form onSubmit={this.handleSubmit} className="search__form--form" >
+            <div className="form-group">
+              <label>
+              Search
+              </label>
+              <input
+                onChange={this.handleChange}
+                type="text"
+                name="item"
+                value={this.state.item}
+              />
+            </div>
+            <div>
+            <button onClick={this.handleClick}><i class="fas fa-search" /></button>
+            </div>
+          </form>
+        </div>
 
         <div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label>item</label>
-            <input
-              onChange={this.handleChange}
-              type="text"
-              name="item"
-              value={this.state.item}
-            />
-          </div>
-          <button onClick={this.handleClick}>Search</button>
-        </form>
-      </div>
-
-      <div>
-        <ResultList products={this.state.results}/>
-      </div>
-
+          <ResultList products={this.state.results} />
+        </div>
       </div>
     );
   }

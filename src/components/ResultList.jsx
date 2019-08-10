@@ -1,18 +1,17 @@
 import React, { Component } from "react";
+import "./styles/ResultList.css"
+import Card from "../components/Card"
 
 class ResultList extends Component {
   render() {
     return (
-      <div>
-        <ul>
+      <div className="Results">
+        <ul className="ResultList">
           {this.props.products.map(product => {
             return (
-              <li key={product.id}>
-                <img src={product.thumbnail} alt="thumbnail" />
+              <li className="ResultListItem" key={product.id}>
                 <div>
-                  <p>{product.title}</p>
-                  <p>{product.price}</p>
-                  <p>{product.seller.id}</p>
+                  <Card img={product.thumbnail} title={product.title} price={product.price} seller={product.seller.id} />
                 </div>
               </li>
             );

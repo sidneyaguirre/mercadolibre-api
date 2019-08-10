@@ -1,0 +1,13 @@
+.search__form {
+    background-color: #fcf159;
+    padding: 15px;
+}
+
+.search__form--form {
+    display: inline-flex;
+}
+
+.form-group label {
+    padding: 0px 5px;
+    color: #252e7a;
+}

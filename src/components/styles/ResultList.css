@@ -1,0 +1,20 @@
+.Results ul>li {
+  margin-bottom: 1rem;
+  list-style: none;
+}
+
+.ResultList {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  grid-gap: 30px;
+  padding: 30px 20px;
+}
+
+.ResultListItem__name{
+  font-weight: bolder;
+}
+
+.ResultListItem__info{
+  color: #5da9dd;
+}
+
