@@ -8,11 +8,6 @@ const initialState = {
   results: []
 };
 
-const initialState = {
-  item: "",
-  results: []
-};
-
 class Search extends Component {
   state = {
     item: "",
@@ -28,7 +23,7 @@ class Search extends Component {
 
   handleClick = e => {
     console.log("Button was clicked");
-    this.getProducts(this.state.item);
+    this.getProductInfo(this.state.item);
     console.log(this.state.results);
     this.setState(initialState);
   };
@@ -39,32 +34,72 @@ class Search extends Component {
     //console.log(this.state.item);
   };
 
-  getProducts = async param => {
-    console.log(param);
-    const res = await fetch(
-      `https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-080921-fc31c7b26de0adfb1c1b698788499187-349672714`
-    );
-    const data = await res.json();
-    this.setState({ results: [].concat(this.state.results, data.results) });
+  // getProductInfo = async param => {
+  //   let productInfo = [];
+  //   let info = {
+  //     thumbnail: "",
+  //     name: "",
+  //     price: 0,
+  //     seller: 0,
+  //   }
+  //   fetch(`https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-081003-d9e464283fd14bc98cf44fa27c3bafbc-349672714`)
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       Promise.all(
+  //         data.results.map(element =>
+  //           fetch(`https://api.mercadolibre.com/users/${element.seller.id}`)
+  //           .then(res => res.json())
+  //           .then(res => {
+  //             info.name = element.title
+  //             info.thumbnail = element.thumbnail
+  //             info.price = element.price
+  //             info.seller = res.nickname
+  //             productInfo.push(info)
+  //             console.log(info);
+  //           })
+  //         )
+  //       ).then(() => {
+  //         this.setState({ results: [].concat(this.state.results, productInfo)});
+  //       });
+  //     });
+  // }
+
+  getProductInfo = async param => {
+    let productInfo = [];
+    fetch(
+      `https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-081003-d9e464283fd14bc98cf44fa27c3bafbc-349672714`
+    )
+      .then(res => res.json())
+      .then(data => {
+        Promise.all(
+          data.results.map(element =>
+            fetch(`https://api.mercadolibre.com/users/${element.seller.id}`)
+              .then(res => res.json())
+              .then(res => {
+                productInfo.push({
+                  id: element.id,
+                  title: element.title,
+                  thumbnail: element.thumbnail,
+                  price: element.price,
+                  seller: res.nickname
+                });
+              })
+          )
+        ).then(() => {
+          this.setState({
+            results: [].concat(this.state.results, productInfo)
+          });
+        });
+      });
   };
 
-  getSellers = async param => {
-    console.log(param);
-    const res = await fetch(`https://api.mercadolibre.com/users/${param}`);
-    const data = await res.json();
-    this.setState({ results: [].concat(this.state.results, data.results) });
-  };
-
-  
   render() {
     return (
       <div>
         <div className="search__form">
-          <form onSubmit={this.handleSubmit} className="search__form--form" >
+          <form onSubmit={this.handleSubmit} className="search__form--form">
             <div className="form-group">
-              <label>
-              Search
-              </label>
+              <label>Search</label>
               <input
                 onChange={this.handleChange}
                 type="text"
@@ -73,7 +108,9 @@ class Search extends Component {
               />
             </div>
             <div>
-            <button onClick={this.handleClick}><i class="fas fa-search" /></button>
+              <button onClick={this.handleClick}>
+                <i className="fas fa-search" />
+              </button>
             </div>
           </form>
         </div>

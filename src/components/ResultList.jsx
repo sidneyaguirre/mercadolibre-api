@@ -11,7 +11,7 @@ class ResultList extends Component {
             return (
               <li className="ResultListItem" key={product.id}>
                 <div>
-                  <Card img={product.thumbnail} title={product.title} price={product.price} seller={product.seller.id} />
+                  <Card img={product.thumbnail} title={product.name} price={product.price} seller={product.seller} />
                 </div>
               </li>
             );
