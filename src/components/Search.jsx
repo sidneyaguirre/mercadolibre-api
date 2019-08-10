@@ -66,8 +66,9 @@ class Search extends Component {
 
   getProductInfo = async param => {
     let productInfo = [];
+    let acessToken = 'APP_USR-1549768881146675-081014-ba8cc2a6eb07400da158aaa6e113d700-349672714'
     fetch(
-      `https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=APP_USR-1549768881146675-081003-d9e464283fd14bc98cf44fa27c3bafbc-349672714`
+      `https://api.mercadolibre.com/sites/MLU/search?q=${param}&access_token=${acessToken}`
     )
       .then(res => res.json())
       .then(data => {
