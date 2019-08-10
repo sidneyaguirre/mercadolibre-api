@@ -50,6 +50,7 @@ class Search extends Component {
     this.setState({ results: [].concat(this.state.results, data.results) });
   };
 
+  
   render() {
     return (
       <div>
