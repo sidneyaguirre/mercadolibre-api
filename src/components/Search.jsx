@@ -81,7 +81,8 @@ class Search extends Component {
                   id: element.id,
                   title: element.title,
                   thumbnail: element.thumbnail,
-                  price: element.price,
+                  //price: element.price,
+                  price: Intl.NumberFormat().format(element.price),
                   seller: res.nickname
                 });
               })
